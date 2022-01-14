@@ -2,7 +2,7 @@
 #   https://hub.docker.com/r/solarce/zoom-us
 #   https://github.com/sameersbn/docker-skype
 FROM debian:bullseye-slim
-MAINTAINER mdouchement
+LABEL name="docker-zoom-us"
 
 ENV DEBIAN_FRONTEND noninteractive
 
