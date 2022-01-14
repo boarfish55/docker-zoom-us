@@ -4,6 +4,10 @@ on:
     - cron: '0 3 * * 1'
   push:
     branches: [master]
+
+env:
+  IMAGE_NAME: zoom-us
+
 jobs:
   docker:
     runs-on: ubuntu-latest
