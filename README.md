@@ -80,6 +80,12 @@ export ZOOM_HOME=${HOME}/zoomus
 
 ## Upgrading
 
+Note that images older than 7 days are automatically pruned, therefore
+the image will be pulled again on a regular basis, picking up changes
+from both the Debian image and newer zoom versions. However, this will
+not apply any changes to the zoom-us-wrapper script, in which case
+the following instructions should be followed.
+
 To upgrade to newer releases:
 
   1. Download the updated Docker image:
