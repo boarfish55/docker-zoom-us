@@ -125,11 +125,11 @@ prepare_docker_volume_parameters
 prepare_docker_device_parameters
 
 echo "Starting ${prog}..."
-${SUDO} docker run --rm -d \
+${SUDO} docker run --rm \
   ${ENV_VARS} \
   ${VIDEO_DEVICES} \
   --device /dev/dri \
   ${VOLUMES} \
   ${ZOOM_EXTRA_DOCKER_ARGUMENTS} \
   --name zoomus \
-  "${DOCKER_IMAGE}" ${prog} $@ >/dev/null
+  "${DOCKER_IMAGE}" ${prog} $@

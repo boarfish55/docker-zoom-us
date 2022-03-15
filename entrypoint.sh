@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 set -e
 
 USER_UID=${USER_UID:-1000}
@@ -32,7 +33,7 @@ create_user() {
     adduser --disabled-login --uid ${USER_UID} --gid ${USER_GID} \
       --gecos 'ZoomUs' ${ZOOM_US_USER} >/dev/null 2>&1
   fi
-  chown ${ZOOM_US_USER}:${ZOOM_US_USER} -R /home/${ZOOM_US_USER}
+  find /home/${ZOOM_US_USER} -xdev -exec chown ${ZOOM_US_USER}:${ZOOM_US_USER} {} \;
   adduser ${ZOOM_US_USER} sudo
   for grp in $ZOOM_USER_GROUPS; do
     [[ ! -z "$grp" ]] && adduser ${ZOOM_US_USER} $grp
