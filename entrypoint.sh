@@ -59,7 +59,12 @@ grant_access_to_video_devices() {
 launch_zoom_us() {
   cd /home/${ZOOM_US_USER}
   exec sudo -HEu ${ZOOM_US_USER} PULSE_SERVER=/run/pulse/$(basename $ZOOM_PULSE_SOCKET) QT_GRAPHICSSYSTEM="native" xcompmgr -c -l0 -t0 -r0 -o.00 &
-  exec sudo -HEu ${ZOOM_US_USER} PULSE_SERVER=/run/pulse/$(basename $ZOOM_PULSE_SOCKET) QT_GRAPHICSSYSTEM="native" $@
+  # NOTE: While passing --no-sandbox _and_ $@ is a valiant effort, it seems
+  # the ZoomLaunher doesn't process multiple args successfully and just aborts.
+  # It's one or the other, but since newer version of the chrome-sandbox,
+  # it seems we absolutely need --no-sandbox to properly run inside docker.
+  # TBD...
+  exec sudo -HEu ${ZOOM_US_USER} PULSE_SERVER=/run/pulse/$(basename $ZOOM_PULSE_SOCKET) QT_GRAPHICSSYSTEM="native" zoom --no-sandbox $@
 }
 
 case "$1" in
@@ -72,6 +77,7 @@ case "$1" in
   zoom)
     create_user
     grant_access_to_video_devices
+    shift
     echo "$1"
     launch_zoom_us $@
     ;;
